@@ -15,14 +15,14 @@ spec:
         - name: postgre
           image: postgres:13.1
           ports:
-            - containerPort: 5432
+            - containerPort: 5433
           env:
             - name: POSTGRES_PASSWORD
               value: pg1234
             - name: POSTGRES_USER
-              value: kubenews
+              value: miniblog
             - name: POSTGRES_DB
-              value: kubenews
+              value: miniblog
 ---
 apiVersion: v1
 kind: Service
@@ -32,48 +32,48 @@ spec:
   selector:
     app: postgre
   ports:
-    - port: 5432
+    - port: 5433
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubenews
+  name: miniblog
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubenews
+      app: miniblog
   template:
     metadata:
       labels:
-        app: kubenews
+        app: miniblog
       annotations:
         prometheus.io/scrape: 'true'
-        prometheus.io/port: '8080'
+        prometheus.io/port: '8088'
     spec:
       containers:
-      - name: kubenews
-        image: fabricioveronez/kube-news:v3
+      - name: miniblog
+        image: walvesribeiro/miniblog:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8088
         env:
         - name: DB_DATABASE
-          value: kubenews
+          value: miniblog
         - name: DB_PASSWORD
           value: pg1234
         - name: DB_USERNAME
-          value: kubenews
+          value: miniblog
         - name: DB_HOST
           value: postgre
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kubenews
+  name: miniblog
 spec:
   selector:
-    app: kubenews
+    app: miniblog
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 8088
   type: LoadBalancer

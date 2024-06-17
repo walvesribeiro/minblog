@@ -1,5 +1,5 @@
 services:
-  kubenews:
+  miniblog:
     build:
       context: .
       dockerfile: .devcontainer/Dockerfile.dev
@@ -7,14 +7,14 @@ services:
       - .:/app:cached
   prometheus:
     image: prom/prometheus:v2.49.1
-    volumes: 
+    volumes:
       - .docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     depends_on:
-      - kubenews
+      - miniblog
     networks:
-      - kubenews_net
+      - miniblog_net
   grafana:
     image: grafana/grafana:9.5.15
     ports:
@@ -27,4 +27,4 @@ services:
     depends_on:
       - prometheus
     networks:
-      - kubenews_net
+      - miniblog_net

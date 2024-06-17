@@ -2,31 +2,31 @@ services:
   postgre:
     image: postgres:13.13
     ports:
-     - 5432:5432
+      - 5433:5433
     networks:
-      - kubenews_net
+      - miniblog_net
     environment:
       POSTGRES_PASSWORD: pg1234
-      POSTGRES_USER: kubenews
-      POSTGRES_DB: kubenews
+      POSTGRES_USER: miniblog
+      POSTGRES_DB: miniblog
 
-  kubenews:
-    image: fabricioveronez/kube-news:v3
+  miniblog:
+    image: walvesribeiro/miniblog:v3
     depends_on:
       - postgre
     build:
       context: ./src
       dockerfile: ./Dockerfile
     networks:
-      - kubenews_net
-    ports: 
-      - 8080:8080
+      - miniblog_net
+    ports:
+      - 8088:8088
     environment:
-      DB_DATABASE: kubenews
-      DB_USERNAME: kubenews
+      DB_DATABASE: miniblog
+      DB_USERNAME: miniblog
       DB_PASSWORD: pg1234
       DB_HOST: postgre
 
 networks:
-  kubenews_net:
+  miniblog_net:
     driver: bridge

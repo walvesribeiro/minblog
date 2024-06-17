@@ -16,14 +16,14 @@ body {
   display: flex;
   flex-flow: column;
   min-height: 100vh;
-  background-color: #152037;
+  background-color: #41156b;
   font-family: "Inter", sans-serif;
 }
 
 .header {
   width: 100%;
   background: #0f172a;
-  border-bottom: 1px solid rgba(105, 214, 255, 0.3);
+  border-bottom: 1px solid rgba(148, 23, 250, 0.3);
   padding: 25px 15px;
 }
 
@@ -144,7 +144,7 @@ footer {
   .header {
     max-height: 99px;
   }
-  
+
   .header__container {
     flex-direction: row;
     justify-content: space-between;
