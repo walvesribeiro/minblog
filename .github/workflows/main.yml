@@ -32,6 +32,7 @@ jobs:
             walvesribeiro/miniblog:latest
   CD:
     runs-on: ubuntu-latest
+    environment: main
     needs: [CI]
 
     steps:
